@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Sofwave — FDA-cleared ultrasound skin tightening. Lift your face, neck and brow in one 45-minute session. Zero downtime. Now available at [Practice Name]."/>
+  <title>Sofwave Skin Tightening | [Practice Name]</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    /* ─── Reset & Base ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body { font-family: 'Inter', sans-serif; color: #1a1a2e; background: #fff; line-height: 1.6; overflow-x: hidden; }
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── Design Tokens ─── */
+    :root {
+      --navy:   #0d1b3e;
+      --blue:   #1a3a6b;
+      --teal:   #2a7d8c;
+      --gold:   #c9a84c;
+      --gold-lt:#f0d98a;
+      --light:  #f5f7fa;
+      --white:  #ffffff;
+      --muted:  #6b7280;
+      --border: #e5e7eb;
+      --r:      12px;
+      --sh:     0 4px 32px rgba(13,27,62,.10);
+      --sh-lg:  0 12px 56px rgba(13,27,62,.18);
+    }
+
+    /* ─── Utility ─── */
+    .container { max-width: 1160px; margin: 0 auto; padding: 0 20px; }
+    .section    { padding: 80px 0; }
+    .section-sm { padding: 52px 0; }
+    h1,h2,h3,h4 { font-family: 'Cormorant Garamond', serif; font-weight: 400; line-height: 1.2; }
+    h1 { font-size: clamp(2.4rem, 5.5vw, 4.2rem); }
+    h2 { font-size: clamp(1.9rem, 4vw, 3rem); }
+    h3 { font-size: clamp(1.1rem, 2.5vw, 1.5rem); }
+    p  { color: var(--muted); font-size: 1rem; line-height: 1.85; }
+
+    .eyebrow {
+      display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .16em;
+      text-transform: uppercase; color: var(--teal); background: rgba(42,125,140,.08);
+      border: 1px solid rgba(42,125,140,.22); border-radius: 100px;
+      padding: 5px 16px; margin-bottom: 16px;
+    }
+    .eyebrow-gold {
+      color: var(--gold); background: rgba(201,168,76,.08); border-color: rgba(201,168,76,.28);
+    }
+
+    /* ─── Buttons ─── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 15px 34px; border-radius: 4px; font-family: 'Inter', sans-serif;
+      font-size: .84rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+      cursor: pointer; transition: all .22s ease; border: none; white-space: nowrap;
+    }
+    .btn-gold   { background: var(--gold); color: #fff; }
+    .btn-gold:hover { background: #b8943e; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(201,168,76,.38); }
+    .btn-navy   { background: var(--navy); color: #fff; }
+    .btn-navy:hover { background: var(--blue); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(13,27,62,.28); }
+    .btn-ghost  { background: transparent; color: #fff; border: 1.5px solid rgba(255,255,255,.5); }
+    .btn-ghost:hover { border-color: #fff; background: rgba(255,255,255,.08); }
+    .btn-full   { width: 100%; }
+
+    /* ─── Announce Bar ─── */
+    .announce {
+      background: var(--navy); color: rgba(255,255,255,.8);
+      text-align: center; padding: 10px 16px;
+      font-size: .82rem; font-weight: 500; letter-spacing: .02em;
+    }
+    .announce strong { color: var(--gold-lt); }
+
+    /* ─── Nav ─── */
+    .nav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(255,255,255,.97); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.55rem;
+      color: var(--navy); letter-spacing: .02em; font-weight: 400;
+    }
+    .nav-logo span { color: var(--teal); }
+    .nav-right { display: flex; align-items: center; gap: 18px; }
+    .nav-phone { font-size: .85rem; color: var(--muted); font-weight: 500; }
+    @media (max-width: 600px) { .nav-phone { display: none; } }
+
+    /* ─── HERO ─── */
+    .hero { background: var(--navy); overflow: hidden; }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: calc(100vh - 108px);
+      align-items: stretch;
+    }
+    /* Left: copy */
+    .hero-copy {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 72px 56px 72px 0;
+    }
+    .hero-badges { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+    .hbadge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14);
+      border-radius: 100px; padding: 6px 14px;
+      font-size: .72rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: rgba(255,255,255,.8);
+    }
+    .hbadge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+    .hero-copy h1 { color: #fff; margin-bottom: 20px; }
+    .hero-copy h1 em { color: var(--gold); font-style: italic; }
+    .hero-sub { font-size: 1.1rem; color: rgba(255,255,255,.68); max-width: 500px; margin-bottom: 36px; line-height: 1.9; }
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 48px; }
+    /* Social proof strip */
+    .hero-proof { display: flex; flex-wrap: wrap; gap: 28px; padding-top: 32px; border-top: 1px solid rgba(255,255,255,.1); }
+    .proof-stat strong { display: block; font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; color: #fff; font-weight: 300; line-height: 1; }
+    .proof-stat span { font-size: .72rem; color: rgba(255,255,255,.5); letter-spacing: .1em; text-transform: uppercase; }
+    /* Stars */
+    .hero-stars { display: flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+    .stars-row { color: var(--gold); font-size: 1rem; letter-spacing: 2px; }
+    .stars-label { font-size: .78rem; color: rgba(255,255,255,.5); }
+
+    /* Right: image + floating B/A card */
+    .hero-visual {
+      position: relative; overflow: hidden;
+      background: #0a1428;
+    }
+    .hero-img {
+      width: 100%; height: 100%; object-fit: cover; object-position: center top;
+      opacity: .92;
+    }
+    .hero-ba-float {
+      position: absolute; bottom: 32px; left: -24px;
+      background: rgba(255,255,255,.97); border-radius: var(--r);
+      box-shadow: var(--sh-lg); overflow: hidden; width: 220px;
+    }
+    .hero-ba-float img { width: 100%; display: block; }
+    .hero-ba-label {
+      padding: 10px 14px; font-size: .72rem; font-weight: 700;
+      color: var(--navy); letter-spacing: .06em; text-transform: uppercase;
+      border-top: 2px solid var(--teal);
+    }
+
+    /* Hero responsive */
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; min-height: auto; }
+      .hero-copy { padding: 56px 0 40px; }
+      .hero-visual { height: 380px; }
+      .hero-ba-float { display: none; }
+    }
+    @media (max-width: 600px) {
+      .hero-copy { padding: 44px 0 36px; }
+      .hero-visual { height: 300px; }
+    }
+
+    /* ─── Trust Bar ─── */
+    .trust { background: var(--light); border-bottom: 1px solid var(--border); padding: 28px 0; }
+    .trust-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 0; }
+    .trust-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 36px; border-right: 1px solid var(--border);
+      font-size: .85rem; font-weight: 600; color: var(--navy);
+    }
+    .trust-item:last-child { border-right: none; }
+    .trust-icon { font-size: 1.2rem; }
+    @media (max-width: 768px) {
+      .trust-row { flex-direction: column; align-items: flex-start; gap: 12px; padding: 0 8px; }
+      .trust-item { border-right: none; padding: 6px 0; }
+    }
+
+    /* ─── Problem ─── */
+    .problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+    .problem-img { border-radius: var(--r); overflow: hidden; box-shadow: var(--sh-lg); }
+    .problem-img img { width: 100%; height: 480px; object-fit: cover; }
+    .problem-copy h2 { color: var(--navy); margin-bottom: 18px; }
+    .problem-copy p { margin-bottom: 16px; }
+    .check-list { list-style: none; margin: 24px 0 32px; }
+    .check-list li {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 11px 0; border-bottom: 1px solid var(--border);
+      font-size: .95rem; color: var(--navy);
+    }
+    .check-list li:last-child { border-bottom: none; }
+    .chk { width: 22px; height: 22px; border-radius: 50%; background: var(--teal); color: #fff; display: flex; align-items: center; justify-content: center; font-size: .65rem; flex-shrink: 0; margin-top: 2px; }
+    @media (max-width: 800px) { .problem-grid { grid-template-columns: 1fr; gap: 36px; } .problem-img img { height: 300px; } }
+
+    /* ─── How It Works ─── */
+    .how { background: var(--light); }
+    .sec-header { text-align: center; margin-bottom: 52px; }
+    .sec-header h2 { color: var(--navy); margin-bottom: 12px; }
+    .sec-header p { max-width: 560px; margin: 0 auto; }
+    .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 48px; }
+    .how-card {
+      background: #fff; border-radius: var(--r); padding: 32px 24px;
+      box-shadow: var(--sh); border-top: 3px solid var(--teal);
+      transition: transform .2s;
+    }
+    .how-card:hover { transform: translateY(-4px); }
+    .how-num { font-family: 'Cormorant Garamond', serif; font-size: 3rem; color: var(--teal); opacity: .2; line-height: 1; margin-bottom: 12px; }
+    .how-card h3 { color: var(--navy); margin-bottom: 8px; font-size: 1.05rem; }
+    .how-card p { font-size: .88rem; }
+    @media (max-width: 900px) { .how-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .how-grid { grid-template-columns: 1fr; } }
+
+    /* Comparison */
+    .cmp-box { background: var(--navy); border-radius: var(--r); padding: 44px 48px; }
+    .cmp-box h3 { color: #fff; margin-bottom: 28px; font-size: 1.8rem; }
+    .cmp-tbl { width: 100%; border-collapse: collapse; }
+    .cmp-tbl th { text-align: left; padding: 10px 16px; font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.38); border-bottom: 1px solid rgba(255,255,255,.1); }
+    .cmp-tbl td { padding: 12px 16px; font-size: .88rem; color: rgba(255,255,255,.68); border-bottom: 1px solid rgba(255,255,255,.06); }
+    .cmp-tbl td:first-child { color: #fff; font-weight: 600; }
+    .good { color: #4ade80 !important; font-weight: 700; }
+    .bad  { color: #f87171 !important; }
+    @media (max-width: 700px) { .cmp-box { padding: 28px 16px; } .cmp-tbl th, .cmp-tbl td { padding: 9px 10px; font-size: .78rem; } }
+
+    /* ─── Video ─── */
+    .video-sec { background: #fff; }
+    .video-inner { text-align: center; }
+    .video-inner h2 { color: var(--navy); margin-bottom: 10px; }
+    .video-inner > p { max-width: 520px; margin: 0 auto 36px; }
+    .video-wrap { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: var(--r); box-shadow: var(--sh-lg); max-width: 800px; margin: 0 auto; }
+    .video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+    .video-caption { margin-top: 16px; font-size: .8rem; color: var(--muted); text-align: center; }
+
+    /* ─── Before / After ─── */
+    .ba-sec { background: var(--light); }
+    .ba-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 14px; }
+    .ba-card { background: #fff; border-radius: var(--r); overflow: hidden; box-shadow: var(--sh); }
+    .ba-card img { width: 100%; display: block; }
+    .ba-meta { padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 4px; }
+    .ba-area { font-size: .78rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--navy); }
+    .ba-credit { font-size: .72rem; color: var(--muted); }
+    .ba-disclaimer { font-size: .72rem; color: var(--muted); text-align: center; margin-bottom: 52px; }
+    @media (max-width: 640px) { .ba-grid { grid-template-columns: 1fr; } }
+
+    /* Testimonials */
+    .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .testi-card { background: #fff; border-radius: var(--r); padding: 28px; box-shadow: var(--sh); }
+    .testi-stars { color: var(--gold); font-size: .9rem; letter-spacing: 2px; margin-bottom: 12px; }
+    .testi-card p { font-size: .9rem; font-style: italic; color: var(--navy); margin-bottom: 16px; line-height: 1.75; }
+    .testi-author { font-size: .75rem; font-weight: 700; color: var(--teal); letter-spacing: .04em; text-transform: uppercase; }
+    @media (max-width: 800px) { .testi-grid { grid-template-columns: 1fr; } }
+
+    /* ─── Specs ─── */
+    .specs-sec { background: #fff; }
+    .specs-inner { max-width: 760px; margin: 0 auto; }
+    .specs-inner h2 { color: var(--navy); text-align: center; margin-bottom: 40px; }
+    .specs-tbl { width: 100%; border-collapse: collapse; }
+    .specs-tbl tr:nth-child(odd) td { background: var(--light); }
+    .specs-tbl td { padding: 16px 20px; font-size: .95rem; border-bottom: 1px solid var(--border); }
+    .specs-tbl td:first-child { font-weight: 700; color: var(--navy); width: 44%; }
+
+    /* ─── Pricing ─── */
+    .pricing-sec { background: var(--navy); }
+    .pricing-hdr { text-align: center; margin-bottom: 48px; }
+    .pricing-hdr h2 { color: #fff; margin-bottom: 10px; }
+    .pricing-hdr p { color: rgba(255,255,255,.58); max-width: 500px; margin: 0 auto; }
+    .scarcity {
+      background: rgba(201,168,76,.1); border: 1px solid rgba(201,168,76,.28);
+      border-radius: 8px; padding: 18px 24px; text-align: center;
+      max-width: 820px; margin: 0 auto 40px;
+    }
+    .scarcity p { color: rgba(255,255,255,.8); font-size: .9rem; }
+    .scarcity strong { color: var(--gold-lt); }
+    .spots-row { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 10px; }
+    .spots-track { flex: 1; max-width: 260px; height: 5px; background: rgba(255,255,255,.1); border-radius: 100px; overflow: hidden; }
+    .spots-fill { height: 100%; width: 70%; background: var(--gold); border-radius: 100px; }
+    .spots-lbl { font-size: .76rem; color: rgba(255,255,255,.45); white-space: nowrap; }
+    .price-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; max-width: 820px; margin: 0 auto 36px; }
+    .price-card {
+      background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--r); padding: 38px 32px; text-align: center;
+      transition: transform .2s;
+    }
+    .price-card:hover { transform: translateY(-4px); }
+    .price-card.feat { background: rgba(201,168,76,.08); border-color: var(--gold); }
+    .price-badge-tag { display: inline-block; background: var(--gold); color: #fff; font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: 4px 12px; border-radius: 100px; margin-bottom: 14px; }
+    .price-card h3 { color: #fff; font-size: 1.4rem; margin-bottom: 8px; }
+    .price-amt { font-family: 'Cormorant Garamond', serif; font-size: 3.4rem; color: var(--gold); line-height: 1; margin-bottom: 4px; }
+    .price-sub { font-size: .78rem; color: rgba(255,255,255,.38); margin-bottom: 24px; }
+    .price-feats { list-style: none; text-align: left; margin-bottom: 28px; }
+    .price-feats li { display: flex; align-items: flex-start; gap: 9px; padding: 8px 0; font-size: .85rem; color: rgba(255,255,255,.7); border-bottom: 1px solid rgba(255,255,255,.06); }
+    .price-feats li:last-child { border-bottom: none; }
+    .pchk { color: var(--gold); font-size: .75rem; margin-top: 3px; flex-shrink: 0; }
+    .pricing-note { text-align: center; font-size: .76rem; color: rgba(255,255,255,.3); max-width: 560px; margin: 0 auto; line-height: 1.9; }
+    @media (max-width: 640px) { .price-grid { grid-template-columns: 1fr; max-width: 400px; } }
+
+    /* ─── Provider ─── */
+    .provider-sec { background: var(--light); }
+    .provider-grid { display: grid; grid-template-columns: 280px 1fr; gap: 60px; align-items: center; }
+    .provider-photo { border-radius: var(--r); overflow: hidden; box-shadow: var(--sh-lg); }
+    .provider-placeholder { width: 100%; height: 360px; background: linear-gradient(135deg,#e5e7eb,#d1d5db); display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--muted); font-size: .82rem; text-align: center; padding: 20px; }
+    .provider-placeholder-icon { font-size: 3rem; opacity: .3; margin-bottom: 12px; }
+    .provider-copy h2 { color: var(--navy); margin-bottom: 4px; }
+    .provider-title { font-size: .85rem; color: var(--teal); font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 20px; }
+    .provider-copy p { margin-bottom: 14px; }
+    .provider-quote { font-style: italic; color: var(--navy) !important; border-left: 3px solid var(--teal); padding-left: 16px; margin: 22px 0 !important; font-size: 1rem !important; line-height: 1.75 !important; }
+    .creds { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .cred { background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 6px 14px; font-size: .74rem; font-weight: 700; color: var(--navy); letter-spacing: .04em; }
+    @media (max-width: 800px) { .provider-grid { grid-template-columns: 1fr; gap: 32px; } }
+
+    /* ─── FAQ ─── */
+    .faq-sec { background: #fff; }
+    .faq-list { max-width: 760px; margin: 0 auto; }
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-q {
+      width: 100%; background: none; border: none; text-align: left;
+      padding: 22px 0; font-size: .98rem; font-weight: 600; color: var(--navy);
+      cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+      gap: 14px; font-family: 'Inter', sans-serif;
+    }
+    .faq-icon { font-size: 1.2rem; color: var(--teal); flex-shrink: 0; transition: transform .25s; }
+    .faq-ans { max-height: 0; overflow: hidden; transition: max-height .35s ease; }
+    .faq-ans-inner { padding-bottom: 20px; color: var(--muted); font-size: .94rem; line-height: 1.85; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-item.open .faq-ans { max-height: 400px; }
+
+    /* ─── Lead Form ─── */
+    .form-sec { background: linear-gradient(135deg, var(--navy) 0%, #1a3a6b 100%); padding: 80px 0; }
+    .form-wrap { max-width: 640px; margin: 0 auto; text-align: center; }
+    .form-wrap h2 { color: #fff; margin-bottom: 8px; }
+    .form-wrap > p { color: rgba(255,255,255,.58); margin-bottom: 36px; }
+    .form-card { background: #fff; border-radius: var(--r); padding: 40px 36px; text-align: left; box-shadow: 0 24px 64px rgba(0,0,0,.28); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: .76rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; letter-spacing: .06em; text-transform: uppercase; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 13px 15px; border: 1.5px solid var(--border); border-radius: 6px;
+      font-size: .95rem; font-family: 'Inter', sans-serif; color: var(--navy); background: #fff;
+      transition: border-color .2s; outline: none; -webkit-appearance: none;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--teal); }
+    .form-group textarea { resize: vertical; min-height: 80px; }
+    .form-submit { width: 100%; padding: 17px; font-size: .95rem; margin-top: 4px; }
+    .form-disclaimer { font-size: .7rem; color: var(--muted); text-align: center; margin-top: 14px; line-height: 1.75; }
+    @media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } .form-card { padding: 28px 20px; } }
+
+    /* ─── Footer ─── */
+    footer { background: #060c1a; color: rgba(255,255,255,.38); padding: 44px 0; font-size: .78rem; text-align: center; line-height: 2.1; }
+    .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.45rem; color: #fff; margin-bottom: 16px; }
+    .footer-links { display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin: 12px 0; }
+    .footer-links a { color: rgba(255,255,255,.3); transition: color .2s; }
+    .footer-links a:hover { color: #fff; }
+    .footer-disclaimer { max-width: 740px; margin: 16px auto 0; line-height: 1.85; }
+  </style>
+</head>
+<body>
+
+<!-- Announce -->
+<div class="announce">
+  <strong>Limited Availability —</strong> Only 3 introductory appointments remaining at this pricing. Reserve yours today.
+</div>
+
+<!-- Nav -->
+<nav class="nav">
+  <div class="container nav-inner">
+    <div class="nav-logo">≈ sof<span>wave</span></div>
+    <div class="nav-right">
+      <span class="nav-phone">[PRACTICE PHONE]</span>
+      <a href="#form" class="btn btn-navy">Book a Consultation</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+
+      <!-- Copy -->
+      <div class="hero-copy">
+        <div class="hero-stars">
+          <span class="stars-row">★★★★★</span>
+          <span class="stars-label">Rated 5/5 by patients — zero downtime, real results</span>
+        </div>
+        <div class="hero-badges">
+          <span class="hbadge"><span class="hbadge-dot"></span>FDA Cleared</span>
+          <span class="hbadge"><span class="hbadge-dot"></span>No Surgery</span>
+          <span class="hbadge"><span class="hbadge-dot"></span>Zero Downtime</span>
+          <span class="hbadge"><span class="hbadge-dot"></span>1 Session</span>
+        </div>
+        <h1>Look Years Younger — In One <em>Lunch Break.</em></h1>
+        <p class="hero-sub">Sofwave is the FDA-cleared ultrasound treatment that visibly lifts your face, neck, and brow in a single 45-minute session. No needles. No surgery. No recovery. Walk in, walk out, look refreshed.</p>
+        <div class="hero-ctas">
+          <a href="#form" class="btn btn-gold">Claim Your Spot — Free Consult →</a>
+          <a href="#results" class="btn btn-ghost">See Real Results</a>
+        </div>
+        <div class="hero-proof">
+          <div class="proof-stat"><strong>1</strong><span>Session</span></div>
+          <div class="proof-stat"><strong>0</strong><span>Days Downtime</span></div>
+          <div class="proof-stat"><strong>12</strong><span>Wks to Full Results</span></div>
+          <div class="proof-stat"><strong>12+</strong><span>Months Lasting</span></div>
+        </div>
+      </div>
+
+      <!-- Visual -->
+      <div class="hero-visual">
+        <img class="hero-img" src="assets/Sofwave-treatment.png" alt="Patient receiving Sofwave treatment" loading="eager"/>
+        <div class="hero-ba-float">
+          <img src="assets/Set-109-Face-Neck.jpg" alt="Sofwave before and after result"/>
+          <div class="hero-ba-label">4-Month Result · Face &amp; Neck</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Trust Bar -->
+<div class="trust">
+  <div class="container">
+    <div class="trust-row">
+      <div class="trust-item"><span class="trust-icon">✓</span> FDA-Cleared for Face, Neck &amp; Body</div>
+      <div class="trust-item"><span class="trust-icon">⚡</span> SUPERB™ Ultrasound Technology</div>
+      <div class="trust-item"><span class="trust-icon">🛡</span> Sofcool™ Real-Time Skin Protection</div>
+      <div class="trust-item"><span class="trust-icon">📋</span> Multi-Center Clinical Studies</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ PROBLEM ══ -->
+<section class="section" style="background:#fff;">
+  <div class="container">
+    <div class="problem-grid">
+      <div class="problem-img">
+        <img src="assets/Sofwave-unit-with-background.jpg" alt="Sofwave device"/>
+      </div>
+      <div class="problem-copy">
+        <span class="eyebrow">Smart. Proven. Non-Invasive.</span>
+        <h2>Your Skin Is Changing. The Old Solutions Aren't Keeping Up.</h2>
+        <p>Creams only go so far. Lasers mean weeks of downtime. Surgery carries real risk. You deserve a treatment that actually delivers visible results — without turning your life upside down.</p>
+        <p>Sofwave uses breakthrough <strong>SUPERB™ ultrasound technology</strong> to stimulate your skin's natural regeneration at the precise depth where it matters most — the mid-dermis — without damaging the surface or the fat layer beneath.</p>
+        <ul class="check-list">
+          <li><span class="chk">✓</span> Lifts the eyebrow, neck &amp; under-chin area</li>
+          <li><span class="chk">✓</span> Improves skin laxity on the face and upper arms</li>
+          <li><span class="chk">✓</span> Reduces the appearance of cellulite</li>
+          <li><span class="chk">✓</span> Treats acne scars</li>
+          <li><span class="chk">✓</span> Stimulates collagen, elastin &amp; hyaluronic acid</li>
+          <li><span class="chk">✓</span> No fat loss — preserves your natural facial volume</li>
+        </ul>
+        <a href="#form" class="btn btn-navy">Schedule a Free Consultation</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOW IT WORKS ══ -->
+<section class="section how" id="how">
+  <div class="container">
+    <div class="sec-header">
+      <span class="eyebrow">The Science</span>
+      <h2>Smart Science. Simple Treatment.</h2>
+      <p>Sofwave's unique ultrasound delivery creates a fractional heating effect at precisely 1.5mm in the mid-dermis to stimulate collagen regeneration and skin tightening.</p>
+    </div>
+    <div class="how-grid">
+      <div class="how-card">
+        <div class="how-num">01</div>
+        <h3>SUPERB™ Technology</h3>
+        <p>Synchronous Ultrasound Parallel Beam delivers energy to exactly 1.5mm depth in the mid-dermis — the sweet spot for collagen regeneration, without harming the surface.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">02</div>
+        <h3>Sofcool™ Protection</h3>
+        <p>Real-time skin temperature monitoring and integrated cooling protects the surface while ultrasound heats the underlying tissue. No burns. No damage. No downtime.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">03</div>
+        <h3>Natural Regeneration</h3>
+        <p>Your body's healing response produces new collagen, elastin, and hyaluronic acid over 12 weeks. Results that look natural — because they are.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">04</div>
+        <h3>45-Minute Treatment</h3>
+        <p>A single session is all it takes. Comfortable, with topical anesthetic. You walk out and go right back to your day — no bruising, no swelling, no recovery period.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">05</div>
+        <h3>Results You Can See</h3>
+        <p>Initial improvements within one week. The full transformation unfolds over 12 weeks. Clinical studies show results lasting 12 months or more.</p>
+      </div>
+      <div class="how-card">
+        <div class="how-num">06</div>
+        <h3>Proven Safety Profile</h3>
+        <p>No device-related adverse events reported in multi-center clinical studies. No fat loss. No damage to underlying structures. Cleared for all skin types.</p>
+      </div>
+    </div>
+    <div class="cmp-box">
+      <h3>How Sofwave Compares</h3>
+      <table class="cmp-tbl">
+        <thead>
+          <tr><th>Feature</th><th>Sofwave</th><th>Aggressive Lasers</th><th>RF Microneedling</th><th>Gentle IPL/RF</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Downtime</td><td class="good">None</td><td class="bad">Weeks</td><td class="bad">Days</td><td class="good">None</td></tr>
+          <tr><td>Invasive</td><td class="good">No</td><td class="bad">Surface damage</td><td class="bad">Skin penetration</td><td class="good">No</td></tr>
+          <tr><td>Fat Loss Risk</td><td class="good">None</td><td class="bad">Possible</td><td class="bad">Possible</td><td class="good">None</td></tr>
+          <tr><td>Sessions Needed</td><td class="good">1</td><td>1–3</td><td>3–6</td><td class="bad">Multiple</td></tr>
+          <tr><td>Results Duration</td><td class="good">12+ months</td><td>6–12 months</td><td>6–12 months</td><td class="bad">Limited</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PATIENT VIDEO ══ -->
+<section class="section video-sec">
+  <div class="container">
+    <div class="video-inner">
+      <span class="eyebrow">Real Patient Story</span>
+      <h2>"I Was Absolutely Blown Away by My Results"</h2>
+      <p>Watch a real patient walk through her entire Sofwave experience — from consultation to treatment to her 3-month results.</p>
+      <div class="video-wrap">
+        <iframe src="https://www.youtube.com/embed/fpZGfsl0fWU" title="Sofwave Real Patient Experience and Results" allowfullscreen loading="lazy"></iframe>
+      </div>
+      <p class="video-caption">Real patient. Real results. Individual outcomes may vary.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ BEFORE / AFTER ══ -->
+<section class="section ba-sec" id="results">
+  <div class="container">
+    <div class="sec-header">
+      <span class="eyebrow">Real Results</span>
+      <h2>Before &amp; After</h2>
+      <p>Clinical results from licensed Sofwave providers. No filters. No digital alteration.</p>
+    </div>
+    <div class="ba-grid">
+      <div class="ba-card">
+        <img src="assets/Set-109-Face-Neck.jpg" alt="Sofwave Face & Neck Before and After — 4 Month Result"/>
+        <div class="ba-meta">
+          <span class="ba-area">Face &amp; Neck — 4 Month Result</span>
+          <span class="ba-credit">Courtesy of Misty Med Spa</span>
+        </div>
+      </div>
+      <div class="ba-card">
+        <img src="assets/Set-106-Lower-Face-Neck.jpg" alt="Sofwave Lower Face & Neck Before and After — 5 Month Result"/>
+        <div class="ba-meta">
+          <span class="ba-area">Lower Face &amp; Neck — 5 Month Result</span>
+          <span class="ba-credit">Courtesy of The Skin Proper</span>
+        </div>
+      </div>
+      <div class="ba-card">
+        <img src="assets/Set-104-Eyebrows.jpg" alt="Sofwave Brow Lift Before and After — 3 Month Result"/>
+        <div class="ba-meta">
+          <span class="ba-area">Brow Lift — 3 Month Result</span>
+          <span class="ba-credit">Courtesy of Institute of Aesthetics</span>
+        </div>
+      </div>
+      <div class="ba-card">
+        <img src="assets/Set-108-Full-Face-Neck.jpg" alt="Sofwave Full Face & Neck Before and After — 3 Month Result"/>
+        <div class="ba-meta">
+          <span class="ba-area">Full Face &amp; Neck — 3 Month Result</span>
+          <span class="ba-credit">Courtesy of St. Petersburg Center for Plastic Surgery</span>
+        </div>
+      </div>
+    </div>
+    <p class="ba-disclaimer">*Results may vary. All images courtesy of licensed Sofwave providers. No filters or digital alteration applied.</p>
+
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p>"I loved that there was no interruption to my daily routine. I went right back to work immediately — and the results kept getting better every week."</p>
+        <div class="testi-author">— [Patient Name], [City]</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p>"My friends kept saying 'You look happier' — they couldn't put their finger on what changed. That's exactly what I wanted. Natural, refreshed, not 'done.'"</p>
+        <div class="testi-author">— [Patient Name], [City]</div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p>"By week 12 my jawline was visibly sharper and my neck looked years younger. I finally found something that actually works without surgery or recovery."</p>
+        <div class="testi-author">— [Patient Name], [City]</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SPECS ══ -->
+<section class="section-sm specs-sec">
+  <div class="container">
+    <div class="specs-inner">
+      <h2>What to Expect</h2>
+      <table class="specs-tbl">
+        <tbody>
+          <tr><td>Treatment Time</td><td>30 to 45 minutes</td></tr>
+          <tr><td>Downtime</td><td>None — return to your routine immediately</td></tr>
+          <tr><td>Comfort Level</td><td>Comfortable; topical anesthetic applied beforehand</td></tr>
+          <tr><td>Skin Protection</td><td>Integrated Sofcool™ real-time cooling</td></tr>
+          <tr><td>Treatment Areas</td><td>Face, Brow, Neck, Under-Chin, Upper Arms, Body</td></tr>
+          <tr><td>When You'll See Results</td><td>Initial improvement within 1 week; full results at 12 weeks</td></tr>
+          <tr><td>How Long Results Last</td><td>Up to 12 months or more (clinical studies)</td></tr>
+          <tr><td>Sessions Required</td><td>1 single treatment session</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ══ PRICING ══ -->
+<section class="section pricing-sec" id="pricing">
+  <div class="container">
+    <div class="pricing-hdr">
+      <span class="eyebrow eyebrow-gold">Introductory Pricing</span>
+      <h2>Exclusive Introductory Offer</h2>
+      <p>We are welcoming a select group of patients to experience Sofwave at introductory pricing. Available for a limited time only.</p>
+    </div>
+    <div class="scarcity">
+      <p><strong>7 of 10 introductory appointments</strong> have already been reserved.</p>
+      <div class="spots-row">
+        <span class="spots-lbl">Availability</span>
+        <div class="spots-track"><div class="spots-fill"></div></div>
+        <span class="spots-lbl">3 spots remaining</span>
+      </div>
+    </div>
+    <div class="price-grid">
+      <div class="price-card">
+        <h3>Single Treatment</h3>
+        <div class="price-amt">$2,500</div>
+        <div class="price-sub">One full Sofwave session</div>
+        <ul class="price-feats">
+          <li><span class="pchk">✓</span> Full face + neck treatment</li>
+          <li><span class="pchk">✓</span> Topical anesthetic included</li>
+          <li><span class="pchk">✓</span> 30-day follow-up check-in</li>
+          <li><span class="pchk">✓</span> Results lasting 12+ months</li>
+        </ul>
+        <a href="#form" class="btn btn-ghost btn-full">Reserve This Offer</a>
+      </div>
+      <div class="price-card feat">
+        <span class="price-badge-tag">Best Value</span>
+        <h3>Treatment Package</h3>
+        <div class="price-amt">$4,000</div>
+        <div class="price-sub">Full treatment + enhancement session</div>
+        <ul class="price-feats">
+          <li><span class="pchk">✓</span> Everything in Single Treatment</li>
+          <li><span class="pchk">✓</span> Enhancement session included</li>
+          <li><span class="pchk">✓</span> Priority scheduling</li>
+          <li><span class="pchk">✓</span> Extended 90-day follow-up</li>
+          <li><span class="pchk">✓</span> Loyalty program enrollment</li>
+        </ul>
+        <a href="#form" class="btn btn-gold btn-full">Reserve This Offer →</a>
+      </div>
+    </div>
+    <p class="pricing-note">Introductory pricing is available to the first 10 patients only and is subject to change. Financing options available. A complimentary consultation is required prior to booking.</p>
+  </div>
+</section>
+
+<!-- ══ PROVIDER ══ -->
+<section class="section provider-sec">
+  <div class="container">
+    <div class="provider-grid">
+      <div class="provider-photo">
+        <div class="provider-placeholder">
+          <div class="provider-placeholder-icon">👤</div>
+          <strong style="color:var(--navy);">[PROVIDER HEADSHOT]</strong>
+          <span>Replace with provider photo</span>
+        </div>
+      </div>
+      <div class="provider-copy">
+        <span class="eyebrow">Your Provider</span>
+        <h2>[Provider Name, MD]</h2>
+        <p class="provider-title">[Title] · [Practice Name]</p>
+        <p>[Provider bio — describe their background, specialization, and why they chose to offer Sofwave. Describe their experience in aesthetic medicine and their commitment to patient safety and natural-looking outcomes.]</p>
+        <p class="provider-quote">"Sofwave brings a novel, non-invasive approach to improve skin laxity and tone using breakthrough ultrasound technology with a high safety profile." — <em>[Provider Name]</em></p>
+        <div class="creds">
+          <span class="cred">Board Certified</span>
+          <span class="cred">FDA-Cleared Technology</span>
+          <span class="cred">Certified Sofwave Provider</span>
+          <span class="cred">[Add Credential]</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FAQ ══ -->
+<section class="section faq-sec">
+  <div class="container">
+    <div class="sec-header">
+      <span class="eyebrow">Common Questions</span>
+      <h2>Frequently Asked Questions</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Is Sofwave painful?<span class="faq-icon">+</span></button>
+        <div class="faq-ans"><div class="faq-ans-inner">Patients report that the treatment is comfortable. During treatment, you may feel a warmness of the skin as the energy is delivered, but there is no persistent pain or tenderness afterward. A topical anesthetic is applied before treatment to maximize comfort.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Can I go right back to work after Sofwave?<span class="faq-icon">+</span></button>
+        <div class="faq-ans"><div class="faq-ans-inner">Yes. You can resume your normal activities immediately following your Sofwave appointment. There is no bruising, and you can apply makeup immediately. Some patients experience mild redness that subsides within a few hours.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">When will I see results?<span class="faq-icon">+</span></button>
+        <div class="faq-ans"><div class="faq-ans-inner">You may see initial improvements within one week. However, the full transformation happens gradually over 12 weeks as your skin naturally produces new collagen, elastin, and hyaluronic acid. Clinical studies show results can last up to a year or more.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Will Sofwave cause fat loss in my face?<span class="faq-icon">+</span></button>
+        <div class="faq-ans"><div class="faq-ans-inner">No. This is one of Sofwave's most important advantages. Unlike some other ultrasound or RF technologies, Sofwave does not cause fat loss. The treatment targets the mid-dermis at 1.5mm depth — well above the fat layer — so your natural facial volume is completely preserved.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">What areas can Sofwave treat?<span class="faq-icon">+</span></button>
+        <div class="faq-ans"><div class="faq-ans-inner">Sofwave is FDA-cleared to treat the face (including brow lift), neck, submental (under-chin) area, upper arms, and body areas affected by cellulite. It also improves acne scars and overall skin laxity.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">How many sessions do I need?<span class="faq-icon">+</span></button>
+        <div class="faq-ans"><div class="faq-ans-inner">Most patients achieve their desired results with a single treatment session. The package option includes an enhancement session for optimal results. Your provider will assess your individual needs during the complimentary consultation.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Are there any side effects?<span class="faq-icon">+</span></button>
+        <div class="faq-ans"><div class="faq-ans-inner">Sofwave is a non-invasive treatment for skin tightening. Clinical trials have shown the technology to be effective and safe. No device-related adverse events have been reported in multi-center clinical studies. For more information, visit the <a href="https://sofwave.com/patients/faqs" target="_blank" rel="noopener" style="color:var(--teal);">Sofwave Patient FAQ</a>.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">Why is this pricing only available for a limited time?<span class="faq-icon">+</span></button>
+        <div class="faq-ans"><div class="faq-ans-inner">We are introducing Sofwave as a new offering at our practice and are welcoming a select group of patients at introductory pricing. This allows us to build our results portfolio while giving you exceptional value. Once these appointments are filled, standard pricing will apply.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ LEAD FORM ══ -->
+<section class="form-sec" id="form">
+  <div class="container">
+    <div class="form-wrap">
+      <span class="eyebrow eyebrow-gold">Book Your Consultation</span>
+      <h2>Reserve Your Appointment</h2>
+      <p>Complete the form below and our team will reach out within 24 hours to schedule your complimentary consultation.</p>
+      <div class="form-card">
+        <form>
+          <div class="form-row">
+            <div class="form-group"><label for="fname">First Name *</label><input type="text" id="fname" placeholder="Jane" required autocomplete="given-name"/></div>
+            <div class="form-group"><label for="lname">Last Name *</label><input type="text" id="lname" placeholder="Smith" required autocomplete="family-name"/></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label for="email">Email Address *</label><input type="email" id="email" placeholder="jane@email.com" required autocomplete="email"/></div>
+            <div class="form-group"><label for="phone">Phone Number *</label><input type="tel" id="phone" placeholder="(555) 000-0000" required autocomplete="tel"/></div>
+          </div>
+          <div class="form-group">
+            <label for="interest">Primary Area of Interest</label>
+            <select id="interest">
+              <option value="">Select one...</option>
+              <option>Face &amp; Brow Lift</option>
+              <option>Neck &amp; Under-Chin</option>
+              <option>Upper Arms</option>
+              <option>Cellulite</option>
+              <option>Acne Scars</option>
+              <option>Multiple Areas</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="source">How did you hear about us?</label>
+            <select id="source">
+              <option value="">Select one...</option>
+              <option>Social Media</option>
+              <option>Google Search</option>
+              <option>Friend / Family Referral</option>
+              <option>Email</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Questions or notes? (Optional)</label>
+            <textarea id="message" placeholder="Tell us anything you'd like us to know..."></textarea>
+          </div>
+          <button type="submit" class="btn btn-gold form-submit">Request My Free Consultation →</button>
+          <p class="form-disclaimer">By submitting this form, you consent to be contacted by [Practice Name] regarding your inquiry. Your information is kept strictly confidential and will never be shared or sold. You may opt out at any time. This form is HIPAA-compliant.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="container">
+    <div class="footer-logo">≈ sofwave</div>
+    <p><strong>[Practice Name]</strong> · [Address] · [City, State ZIP]</p>
+    <p>[Phone] · [Email]</p>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">HIPAA Notice</a>
+      <a href="#">Accessibility</a>
+    </div>
+    <p class="footer-disclaimer">*Results may vary. Sofwave is FDA-cleared for the treatment of facial lines and wrinkles, skin laxity of the face, neck, submental, and upper arms, cellulite, and acne scars. Individual results depend on age, skin condition, and treatment area. This page is for informational purposes only and does not constitute medical advice. © 2025 [Practice Name]. All rights reserved. Sofwave™ is a trademark of Sofwave Medical Ltd.</p>
+  </div>
+</footer>
+
+<script>
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+</script>
+</body>
+</html>

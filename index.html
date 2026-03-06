@@ -220,7 +220,19 @@
     .cmp-tbl td:first-child { color: #fff; font-weight: 600; }
     .good { color: #4ade80 !important; font-weight: 700; }
     .bad  { color: #f87171 !important; }
-    @media (max-width: 700px) { .cmp-box { padding: 28px 16px; } .cmp-tbl th, .cmp-tbl td { padding: 9px 10px; font-size: .78rem; } }
+    /* Comparison table mobile fix */
+    .cmp-tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 6px; }
+    .cmp-tbl { min-width: 480px; }
+    @media (max-width: 700px) {
+      .cmp-box { padding: 28px 18px; }
+      .cmp-tbl { min-width: 420px; }
+      .cmp-tbl th, .cmp-tbl td { padding: 9px 10px; font-size: .78rem; }
+      .cmp-tbl th:first-child, .cmp-tbl td:first-child { min-width: 80px; }
+    }
+    @media (max-width: 420px) {
+      .cmp-tbl { min-width: 360px; }
+      .cmp-tbl th, .cmp-tbl td { padding: 8px 8px; font-size: .72rem; }
+    }
 
     /* ─── Video ─── */
     .video-sec { background: #fff; }
@@ -495,6 +507,7 @@
     </div>
     <div class="cmp-box">
       <h3>How Sofwave Compares</h3>
+      <div class="cmp-tbl-wrap">
       <table class="cmp-tbl">
         <thead>
           <tr><th>Feature</th><th>Sofwave</th><th>Aggressive Lasers</th><th>RF Microneedling</th><th>Gentle IPL/RF</th></tr>
@@ -507,6 +520,7 @@
           <tr><td>Results Duration</td><td class="good">12+ months</td><td>6–12 months</td><td>6–12 months</td><td class="bad">Limited</td></tr>
         </tbody>
       </table>
+      </div>
     </div>
   </div>
 </section>
